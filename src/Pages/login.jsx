@@ -39,7 +39,7 @@ const LoginPage = () => {
 
     if (user) {
       showToast('Welcome to GetPet family!', 'success');
-      setTimeout(() => navigate('/dashboard'), 1500);
+      setTimeout(() => navigate('/'), 1500);  // <-- Redirect to home page here
     } else {
       showToast('Email and password do not match. Please enter correct credentials.', 'error');
     }

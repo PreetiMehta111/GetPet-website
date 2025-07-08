@@ -261,11 +261,12 @@ const RegisterPage = () => {
             </div>
           </div>
 
-          <div className="w-1/2 bg-purple-500 flex items-center justify-center p-6">
+          {/* Right side with brown background */}
+          <div className="w-1/2 bg-[#5C4033] flex items-center justify-center p-6">
             <div className="flex flex-col items-center justify-center h-full">
-              <img src={GoldenRetriever} alt="Golden Retriever" className="w-48 h-48 rounded-full object-cover mb-4" />
-              <h2 className="text-2xl font-bold mb-2">Join Our Pet Family!</h2>
-              <p className="text-purple-100">Start your journey to adopt a pet</p>
+              <img src={GoldenRetriever} alt="Golden Retriever" className="w-48 h-48 rounded-full object-cover mb-4 border-4 border-white" />
+              <h2 className="text-2xl font-bold mb-2 text-white">Join Our Pet Family!</h2>
+              <p className="text-white">Start your journey to adopt a pet</p>
             </div>
           </div>
         </div>
