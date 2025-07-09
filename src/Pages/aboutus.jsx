@@ -1,48 +1,116 @@
-import React from 'react';
-import Header from './header.jsx';
-import Footer from './footer.jsx';
-import AboutImage from '../assets/about-us.jpg';
+import React from "react";
+import Header from "./header.jsx";
+import Footer from "./footer.jsx";
+import TeamWorking from "../assets/teamworking.avif";
+import WithLaptop from "../assets/withlaptop.avif";
+import PetCare from "../assets/petcare.avif";
+import CatIcon from "../assets/caticon.avif";
 
 const AboutUs = () => {
   return (
-    <>
+    <div className="bg-[#f9f9f9] text-[#222]">
       <Header />
 
-      {/* Hero Banner */}
-      <div
-        className="w-full h-64 bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: `url(${AboutImage})` }}
-      >
-        <h1 className="text-4xl font-bold text-white bg-black bg-opacity-50 px-6 py-3 rounded-lg">
-          About Us
-        </h1>
-      </div>
+      {/* Section: Title */}
+      <section className="px-6 md:px-20 py-6 scroll-mt-16">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#3d3d3d] mb-2">About Us</h1>
+          <p className="text-sm text-gray-500">Learn more about our mission and the people behind GetPet</p>
+        </div>
 
-      {/* About Us Details */}
-      <div className="py-14 px-6 bg-white text-center">
-        <h2 className="text-3xl font-bold text-purple-700 mb-6">Welcome to Get Pet!</h2>
-        <p className="max-w-3xl mx-auto text-gray-700 leading-relaxed mb-12 text-lg">
-          We’re passionate about connecting pets with loving families. Whether you're looking to adopt or buy, we provide trusted services with a focus on pet welfare and happiness.
-        </p>
-
-        <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto text-left">
+        {/* Section: Main Info */}
+        <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h3 className="text-2xl font-semibold text-purple-600 mb-3">Our Mission</h3>
-            <p className="text-gray-700 leading-relaxed text-base">
-              To promote responsible pet ownership and make pet adoption and purchasing simple, safe, and joyful for everyone.
+            <p className="text-sm tracking-widest text-[#a9745b] mb-2">OUR STORY</p>
+            <h2 className="text-2xl md:text-4xl font-semibold leading-snug mb-4">
+              Your Vision <span className="text-[#a9745b]">Our Expertise</span><br />
+              Your Success <span className="text-[#a9745b]">Get Noticed</span><br />
+              Build Trust. <span className="text-[#a9745b]">Connect Hearts.</span>
+            </h2>
+            <p className="text-gray-600 mb-6">
+              At GetPet, we believe every pet deserves a loving home. Our platform connects adopters and buyers 
+              with reputable breeders and shelters across the country. With intuitive tools, safety-first practices, 
+              and a passion for animal welfare, we help thousands find the perfect furry companion every month.
             </p>
+
+            <div className="grid grid-cols-2 gap-4 text-center">
+              <div>
+                <p className="text-3xl font-bold text-[#3d3d3d]">1k+</p>
+                <p className="text-sm text-gray-500">Completed Projects</p>
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-[#3d3d3d]">5k+</p>
+                <p className="text-sm text-gray-500">Happy Customers</p>
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-[#3d3d3d]">2+</p>
+                <p className="text-sm text-gray-500">Years of Experience</p>
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-[#3d3d3d]">10+</p>
+                <p className="text-sm text-gray-500">National Recognitions</p>
+              </div>
+            </div>
           </div>
-          <div>
-            <h3 className="text-2xl font-semibold text-purple-600 mb-3">Why Choose Us?</h3>
-            <p className="text-gray-700 leading-relaxed text-base">
-              We offer verified listings, caring support, and a wide range of pets, making it easy for you to find your perfect furry or feathered friend.
-            </p>
+
+          <div className="overflow-hidden rounded-xl shadow-md border border-gray-200 transition-transform duration-300 hover:scale-105 hover:shadow-lg h-[320px] md:h-[400px]">
+            <img
+              src={TeamWorking}
+              alt="Team Working"
+              className="w-full h-full object-cover object-center"
+            />
           </div>
         </div>
-      </div>
+
+        {/* Section: Mission & Vision */}
+        <div className="mt-16 bg-[#f9f9f9] p-6 md:p-12 rounded-xl shadow-md border border-[#e5e5e5]">
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            {/* Mission Block */}
+            <div className="bg-white p-6 rounded-lg shadow-sm border border-[#e5e5e5] hover:shadow-md transition-all duration-300 h-40">
+              <h3 className="text-xl font-semibold text-[#a9745b] mb-2">Our Mission</h3>
+              <p className="text-gray-600 leading-relaxed text-sm overflow-hidden">
+                To make pet adoption and buying <span className="font-medium text-[#3d3d3d]">secure, trustworthy,</span> and <span className="font-medium text-[#3d3d3d]">joyful</span> by bridging the gap between loving homes and pets in need.
+              </p>
+            </div>
+
+            {/* Vision Block */}
+            <div className="bg-white p-6 rounded-lg shadow-sm border border-[#e5e5e5] hover:shadow-md transition-all duration-300 h-40">
+              <h3 className="text-xl font-semibold text-[#a9745b] mb-2">Our Vision</h3>
+              <p className="text-gray-600 leading-relaxed text-sm overflow-hidden">
+                A world where <span className="font-medium text-[#3d3d3d]">every pet finds a home</span> and every person experiences the joy of a loyal companion.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Section: Highlights */}
+        <div className="grid md:grid-cols-3 gap-8 mt-16">
+          {[WithLaptop, PetCare, CatIcon].map((image, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            >
+              <img src={image} alt={`Showcase ${index}`} className="h-56 w-full object-cover" />
+              <div className="p-4 text-center">
+                {index === 0 && <p className="font-semibold text-[#3d3d3d]">Tech-Driven Experience</p>}
+                {index === 1 && <p className="font-semibold text-[#3d3d3d]">Pet Care Commitment</p>}
+                {index === 2 && <p className="font-semibold text-[#3d3d3d]">Trusted Community</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Section: Team CTA */}
+        <div className="mt-20 text-center">
+          <h3 className="text-2xl font-bold text-[#3d3d3d] mb-2">Meet Our Passionate Team</h3>
+          <p className="text-gray-600 max-w-xl mx-auto">
+            Behind every adoption story is a team of passionate animal lovers, developers, and caretakers working to create a better tomorrow — for both pets and humans.
+          </p>
+        </div>
+      </section>
 
       <Footer />
-    </>
+    </div>
   );
 };
 
