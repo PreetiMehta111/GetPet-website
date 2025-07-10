@@ -20,6 +20,9 @@ const Home = () => {
   const navigate = useNavigate();
   const sliderImages = [DogSlide, CatSlide, RabbitSlide, TortoiseSlide, FishSlide];
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [cart, setCart] = useState([]);
+  const [ratings, setRatings] = useState({});
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -29,23 +32,21 @@ const Home = () => {
   }, []);
 
   const petProducts = [
-    { id: 1, name: 'Golden Retriever', image: DogProduct, rating: 4.9, desc: 'A loyal and energetic dog perfect for active families' },
-    { id: 2, name: 'Persian Cat', image: CatProduct, rating: 4.8, desc: 'A plush, calm cat ideal for cozy indoor living' },
-    { id: 3, name: 'Mini Lop Rabbit', image: RabbitProduct, rating: 4.7, desc: 'A fluffy rabbit great for gentle playtime' },
-    { id: 4, name: 'Tortoise', image: TortoiseProduct, rating: 4.5, desc: 'A peaceful pet with a lifespan of decades' },
-    { id: 5, name: 'Aquarium Fish', image: FishProduct, rating: 4.6, desc: 'Colorful fish to brighten any home aquarium' },
+    { id: 1, name: 'Golden Retriever', image: DogProduct, desc: 'A loyal and energetic dog perfect for active families' },
+    { id: 2, name: 'Persian Cat', image: CatProduct, desc: 'A plush, calm cat ideal for cozy indoor living' },
+    { id: 3, name: 'Mini Lop Rabbit', image: RabbitProduct, desc: 'A fluffy rabbit great for gentle playtime' },
+    { id: 4, name: 'Tortoise', image: TortoiseProduct, desc: 'A peaceful pet with a lifespan of decades' },
+    { id: 5, name: 'Aquarium Fish', image: FishProduct, desc: 'Colorful fish to brighten any home aquarium' },
   ];
 
   const featuredProducts = [
-    { id: 6, name: 'Tartarughe Decorative Plate', image: TeamWorking, price: 'USD 2,600', shipping: 'Ships in 1-2 weeks', rating: 4.8, desc: 'A unique plate showcasing tortoise-inspired art' },
-    { id: 7, name: 'Pianeta Ceramic Vase', image: TortoiseProduct, price: 'USD 1,200', shipping: 'Ships in 3-5 days', rating: 4.7, desc: 'A sleek vase complementing pet-friendly interiors' },
-    { id: 8, name: 'Campanino 900 Beechwood', image: RabbitProduct, price: 'USD 950', shipping: 'Ships in 1 week', rating: 4.9, desc: 'A sturdy chair for pet owners to unwind' },
+    { id: 6, name: 'Tartarughe Decorative Plate', image: TeamWorking, price: 'USD 2,600', shipping: 'Ships in 1-2 weeks', desc: 'A unique plate providing direct decor with turned aluminum structure and gold leaf finish. Also available in white and black.' },
+    { id: 7, name: 'Pianeta Ceramic Vase', image: TortoiseProduct, price: 'USD 1,200', shipping: 'Ships in 3-5 days', desc: 'A sleek vase offering elegant design with ceramic structure. Available in white, black, and gold leaf finishes.' },
+    { id: 8, name: 'Campanino 900 Beechwood', image: RabbitProduct, price: 'USD 950', shipping: 'Ships in 1 week', desc: 'A sturdy chair providing comfort with beechwood structure. Also available in white and black.' },
   ];
 
   const categories = ['Dogs', 'Cats', 'Rabbits', 'Tortoise', 'Aquarium Fish'];
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [cart, setCart] = useState([]);
-  const [ratings, setRatings] = useState({});
   const [showCart, setShowCart] = useState(false);
 
   const filteredProducts = selectedCategory
@@ -73,14 +74,13 @@ const Home = () => {
 
   const getRatingStars = (productId) => {
     const userRating = ratings[productId] || 0;
-    const defaultRating = petProducts.find(p => p.id === productId)?.rating || 0;
     const stars = [];
     for (let i = 1; i <= 5; i++) {
       stars.push(
         <span
           key={i}
           onClick={() => updateRating(productId, i)}
-          style={{ cursor: 'pointer', color: i <= userRating || i <= defaultRating ? 'gold' : 'gray' }}
+          style={{ cursor: 'pointer', color: i <= userRating ? '#F4A261' : 'gray' }}
         >
           ★
         </span>
@@ -88,6 +88,8 @@ const Home = () => {
     }
     return stars;
   };
+
+  const closeProductDetail = () => setSelectedProduct(null);
 
   return (
     <>
@@ -132,45 +134,71 @@ const Home = () => {
         <h2 className="text-3xl font-extrabold text-center mb-10 text-[#5C4033] tracking-wide uppercase">
           Featured Products
         </h2>
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {featuredProducts.map((product) => (
             <div
               key={product.id}
-              className="bg-white rounded-xl border border-gray-200 shadow hover:shadow-xl transition duration-300 h-80"
+              className="bg-white rounded-xl border border-gray-200 shadow-md hover:shadow-xl hover:scale-105 transition-transform duration-300 cursor-pointer"
+              onClick={() => setSelectedProduct(product)}
             >
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-40 object-cover rounded-t-xl"
+                className="w-full h-48 object-cover rounded-t-xl"
               />
-              <div className="p-4 text-left">
+              <div className="p-4 text-center">
                 <h3 className="text-lg font-semibold text-[#5C4033]">{product.name}</h3>
-                <p className="text-gray-600 text-xs mt-1 mb-1">{product.desc}</p>
-                <p className="text-gray-800 font-medium">{product.price}</p>
-                <p className="text-gray-500 text-xs">{product.shipping}</p>
-                <div className="flex items-center mt-2">
-                  {getRatingStars(product.id)}
-                  <input
-                    type="number"
-                    min="1"
-                    max="5"
-                    value={ratings[product.id] || ''}
-                    onChange={(e) => updateRating(product.id, parseInt(e.target.value) || 0)}
-                    className="ml-2 w-16 p-1 border rounded"
-                    placeholder="Rate (1-5)"
-                  />
-                </div>
-                <button
-                  onClick={() => addToCart(product)}
-                  className="mt-2 w-full bg-[#5C4033] text-white py-1 rounded-lg hover:bg-[#4a332a] transition text-sm"
-                >
-                  Add to Cart
-                </button>
+                <p className="text-gray-600 text-sm">{product.desc}</p>
+                <p className="text-[#5C4033] font-medium mt-2">{product.price}</p>
+                <p className="text-gray-500 text-xs mt-1">{product.shipping}</p>
               </div>
             </div>
           ))}
         </div>
       </section>
+
+      {/* Product Detail Modal */}
+      {selectedProduct && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg w-full max-w-4xl flex">
+            <img
+              src={selectedProduct.image}
+              alt={selectedProduct.name}
+              className="w-1/2 h-96 object-cover rounded-l-lg"
+            />
+            <div className="w-1/2 p-6 text-left">
+              <h2 className="text-2xl font-bold text-[#5C4033] mb-2">{selectedProduct.name}</h2>
+              <p className="text-gray-600 text-sm mb-4">{selectedProduct.desc}</p>
+              <p className="text-[#5C4033] font-medium mb-2">{selectedProduct.price}</p>
+              <p className="text-gray-500 text-xs mb-4">{selectedProduct.shipping}</p>
+              <div className="mb-4">
+                <span className="text-[#5C4033] font-medium mr-2">Rate this product:</span>
+                {getRatingStars(selectedProduct.id)}
+              </div>
+              <button
+                onClick={() => addToCart(selectedProduct)}
+                className="w-full bg-[#5C4033] text-white py-3 rounded-lg hover:bg-[#4a332a] transition duration-300 text-center"
+              >
+                ADD TO BAG
+              </button>
+              <div className="mt-4 flex justify-between">
+                <button
+                  onClick={closeProductDetail}
+                  className="text-[#F4A261] text-sm hover:underline"
+                >
+                  Ask for More Info
+                </button>
+                <button
+                  onClick={closeProductDetail}
+                  className="text-[#F4A261] text-sm hover:underline"
+                >
+                  Request Customization
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Shop by Categories */}
       <section className="py-16 px-6 bg-[#fcefe3] font-sans">
@@ -202,18 +230,6 @@ const Home = () => {
               <div className="p-4">
                 <h3 className="text-lg font-semibold text-[#5C4033]">{product.name}</h3>
                 <p className="text-gray-600 text-xs mt-1 mb-1">{product.desc}</p>
-                <div className="flex items-center mt-2">
-                  {getRatingStars(product.id)}
-                  <input
-                    type="number"
-                    min="1"
-                    max="5"
-                    value={ratings[product.id] || ''}
-                    onChange={(e) => updateRating(product.id, parseInt(e.target.value) || 0)}
-                    className="ml-2 w-16 p-1 border rounded"
-                    placeholder="Rate (1-5)"
-                  />
-                </div>
                 <button
                   onClick={() => addToCart(product)}
                   className="mt-2 w-full bg-[#5C4033] text-white py-1 rounded-lg hover:bg-[#4a332a] transition text-sm"
