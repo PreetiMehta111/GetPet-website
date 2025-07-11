@@ -93,14 +93,16 @@ const ContactUs = () => {
               required
               className="w-full border border-gray-300 rounded-xl px-5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#F4A261]"
             ></textarea>
-            <button
-              type="submit"
-              className="bg-[#5C4033] text-white font-semibold px-6 py-3 rounded-full transition"
-            >
-              Send Message
-            </button>
+           <button
+  type="submit"
+  className="bg-[#5C4033] hover:bg-[#8B5E3C] text-white font-semibold px-6 py-3 rounded-full shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300"
+>
+  Send Message
+</button>
+
+
             <p className="text-center text-sm text-[#555] mt-4 italic">
-              We love hearing from you 💌 — your thoughts mean the world to us!
+              We love hearing from you  — your thoughts mean the world to us!
             </p>
           </form>
         </div>

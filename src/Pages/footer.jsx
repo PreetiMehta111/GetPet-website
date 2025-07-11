@@ -43,7 +43,7 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-3">Contact Info</h3>
           <p className="text-gray-300 text-sm mb-1">📍 Kathmandu, Nepal</p>
-          <p className="text-gray-300 text-sm mb-1">📞 +977-1-4567890</p>
+          <p className="text-gray-300 text-sm mb-1">📞 +977-9801234567</p>
           <p className="text-gray-300 text-sm">📧 info@getpet.com</p>
         </div>
       </div>
