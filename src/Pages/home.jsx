@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './header.jsx';
@@ -246,10 +247,8 @@ const Home = () => {
       </section>
 
       {/* Best Selling Pets */}
-      <section className="py-16 px-6 bg-white font-sans">
-        <h2 className="text-3xl font-extrabold text-center mb-10 text-[#5C4033] tracking-wide uppercase">
-          Best Selling Pets
-        </h2>
+      <section className="py-16 px-6 bg-white">
+        <h2 className="text-3xl font-extrabold text-center mb-10 text-[#5C4033] uppercase">Best Selling Pets</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {bestSellingPets.map((pet) => (
             <div
@@ -257,8 +256,8 @@ const Home = () => {
               className="bg-white rounded-xl border border-gray-200 shadow-md hover:shadow-xl hover:scale-105 transition-transform duration-300 cursor-pointer"
               onClick={() => setSelectedProduct(pet)}
             >
-              <div className="bg-white p-2">
-                <img src={pet.image} alt={pet.name} className="w-full h-auto max-h-48 object-contain rounded-t-xl" />
+              <div className="p-2">
+                <img src={pet.image} alt={pet.name} className="w-full h-48 object-cover rounded-t-xl" />
               </div>
               <div className="p-4 text-center">
                 <h3 className="text-lg font-semibold text-[#5C4033]">{pet.name}</h3>
@@ -280,10 +279,8 @@ const Home = () => {
       </section>
 
       {/* Featured Products */}
-      <section className="py-16 px-6 bg-gradient-to-r from-[#f9e4d4] to-[#fff5e6] font-sans">
-        <h2 className="text-3xl font-extrabold text-center mb-10 text-[#5C4033] tracking-wide uppercase">
-          Featured Products
-        </h2>
+      <section className="py-16 px-6 bg-[#f9e4d4]">
+        <h2 className="text-3xl font-extrabold text-center mb-10 text-[#5C4033] uppercase">Featured Products</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {featuredProducts.map((product) => (
             <div
@@ -291,11 +288,11 @@ const Home = () => {
               className="bg-white rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-transform duration-300 cursor-pointer"
               onClick={() => setSelectedProduct(product)}
             >
-              <div className="bg-white p-2">
+              <div className="p-2">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-auto max-h-56 object-contain rounded-t-xl"
+                  className="w-full h-56 object-cover rounded-t-xl"
                 />
               </div>
               <div className="p-4 text-center">
@@ -352,16 +349,14 @@ const Home = () => {
       )}
 
       {/* Shop by Categories */}
-      <section className="py-16 px-6 bg-[#fcefe3] font-sans">
-        <h2 className="text-3xl font-extrabold text-center mb-10 text-[#5C4033] tracking-wide uppercase">
-          Shop by Categories
-        </h2>
-        <div className="flex flex-wrap justify-center gap-5 mb-8">
+      <section className="py-16 px-6 bg-[#f0e6dc]">
+        <h2 className="text-3xl font-bold text-center mb-10 text-[#5C4033] uppercase">Shop by Categories</h2>
+        <div className="flex flex-wrap justify-center gap-4 mb-8">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat === selectedCategory ? null : cat)}
-              className={`bg-[#5C4033] text-white px-6 py-3 rounded-full text-base font-medium transition ${
+              className={`bg-[#5C4033] text-white px-4 py-2 rounded-lg text-sm font-medium transition ${
                 selectedCategory === cat ? 'bg-[#4a332a]' : 'hover:bg-[#4a332a]'
               }`}
             >
@@ -370,18 +365,20 @@ const Home = () => {
           ))}
         </div>
         {selectedCategory && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className="bg-[#fff5e6] rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer"
+                className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer"
                 onClick={() => setSelectedProduct(product)}
               >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-64 object-cover rounded-t-xl"
-                />
+                <div className="w-full h-48">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover rounded-t-xl"
+                  />
+                </div>
                 <div className="p-4 text-center">
                   <h3 className="text-lg font-semibold text-[#5C4033]">{product.name}</h3>
                   <p className="text-gray-600 text-sm mt-1">{product.desc}</p>
@@ -391,7 +388,7 @@ const Home = () => {
                       e.stopPropagation();
                       addToCart(product);
                     }}
-                    className="mt-3 bg-[#5C4033] text-white px-5 py-2 rounded-full hover:bg-[#4a332a] transition"
+                    className="mt-3 bg-[#5C4033] text-white px-4 py-2 rounded-lg hover:bg-[#4a332a] transition"
                   >
                     Add to Cart
                   </button>
@@ -455,59 +452,55 @@ const Home = () => {
       )}
 
       {/* About Us */}
-      <section className="py-16 px-6 bg-[#fcefe3] text-center font-sans">
-        <h2 className="text-3xl font-extrabold text-[#5C4033] mb-4 tracking-wide">About Us</h2>
-        <p className="max-w-3xl mx-auto text-gray-700 leading-relaxed text-lg">
-          At <span className="font-semibold text-[#5C4033]">GetPet</span>, we’re more than just a pet adoption platform—we’re a community built on love for animals and dedication to their well-being. Founded with a mission to bridge the gap between pets and loving homes, we offer a seamless adoption process, expert guidance, and a curated selection of pet products to enrich your life with your new companion.
+      <section className="py-16 px-6 bg-[#e8d8c8] text-center">
+        <h2 className="text-3xl font-bold text-[#5C4033] mb-6 uppercase">About Us</h2>
+        <p className="max-w-3xl mx-auto text-gray-700 text-lg">
+          At <span className="font-semibold text-[#5C4033]">GetPet</span>, we’re a community dedicated to animal love and well-being. We bridge pets with loving homes through seamless adoption, expert guidance, and curated pet products.
         </p>
         <p className="max-w-2xl mx-auto text-gray-600 mt-4">
-          <strong className="text-[#5C4033]">Our Mission:</strong> To ensure every pet finds a loving home and every owner enjoys a joyful bond with their furry, feathered, or finned friend.
+          <strong className="text-[#5C4033]">Our Mission:</strong> Ensure every pet finds a loving home.
         </p>
         <p className="max-w-2xl mx-auto text-gray-600 mt-2">
-          <strong className="text-[#5C4033]">Why Choose Us?</strong> With verified breeders, compassionate support, and a commitment to animal welfare, GetPet stands out as your go-to destination for pet adoption and care.
+          <strong className="text-[#5C4033]">Why Choose Us?</strong> Verified breeders and compassionate support make us your top pet adoption destination.
         </p>
         <button
           onClick={() => navigate('/about')}
           className="mt-6 bg-[#5C4033] text-white px-6 py-2 rounded-lg hover:bg-[#4a332a] transition"
         >
-          Learn More About Us
+          Learn More
         </button>
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 px-6 bg-white font-sans">
-        <h2 className="text-3xl font-extrabold text-center mb-10 text-[#5C4033] tracking-wide uppercase">
-          What Our Customers Say
-        </h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <section className="py-16 px-6 bg-white">
+        <h2 className="text-3xl font-extrabold text-center mb-10 text-[#5C4033] uppercase">What Our Customers Say</h2>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
           <div className="bg-gray-100 p-5 rounded-lg shadow">
-            <p className="text-gray-700">"Adopting my Golden Retriever was a dream come true with GetPet!"</p>
+            <p className="text-gray-700">"Adopting my Golden Retriever was a dream with GetPet!"</p>
             <p className="mt-2 text-[#5C4033] font-semibold">— Sarah K.</p>
           </div>
           <div className="bg-gray-100 p-5 rounded-lg shadow">
-            <p className="text-gray-700">"Found the perfect Persian Cat with their amazing support!"</p>
+            <p className="text-gray-700">"Perfect Persian Cat with great support!"</p>
             <p className="mt-2 text-[#5C4033] font-semibold">— John D.</p>
           </div>
           <div className="bg-gray-100 p-5 rounded-lg shadow">
-            <p className="text-gray-700">"Great selection of pets and helpful advice!"</p>
+            <p className="text-gray-700">"Amazing pet selection and advice!"</p>
             <p className="mt-2 text-[#5C4033] font-semibold">— Emily R.</p>
           </div>
         </div>
       </section>
 
       {/* Adoption Tips */}
-      <section className="py-16 px-6 bg-[#fcefe3] font-sans">
-        <h2 className="text-3xl font-extrabold text-center mb-10 text-[#5C4033] tracking-wide uppercase">
-          Adoption Tips
-        </h2>
-        <div className="grid gap-6 md:grid-cols-2">
+      <section className="py-16 px-6 bg-[#f0e6dc]">
+        <h2 className="text-3xl font-bold text-center mb-10 text-[#5C4033] uppercase">Adoption Tips</h2>
+        <div className="grid gap-6 md:grid-cols-2 max-w-6xl mx-auto">
           <div className="bg-white p-5 rounded-lg shadow">
             <h3 className="text-lg font-semibold text-[#5C4033]">Prepare Your Home</h3>
-            <p className="text-gray-600 mt-2">Set up a safe space with food, water, and a cozy bed before bringing your pet home.</p>
+            <p className="text-gray-600">Set up a safe space with food, water, and a cozy bed.</p>
           </div>
           <div className="bg-white p-5 rounded-lg shadow">
             <h3 className="text-lg font-semibold text-[#5C4033]">Understand Their Needs</h3>
-            <p className="text-gray-600 mt-2">Research your pet’s diet, exercise, and grooming requirements for a happy life together.</p>
+            <p className="text-gray-600">Research diet, exercise, and grooming requirements.</p>
           </div>
         </div>
       </section>
