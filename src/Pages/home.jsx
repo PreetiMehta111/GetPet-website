@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './header.jsx';
@@ -213,37 +212,38 @@ const Home = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-[#5C4033] text-white py-20 px-6 flex flex-col md:flex-row items-center justify-between">
-        <div className="max-w-xl mb-10 md:mb-0">
-          <h3 className="text-[#F4A261] text-xl font-semibold mb-2">Welcome to Pet Paradise</h3>
-          <h1 className="text-5xl font-bold leading-tight mb-4">Find Your Perfect Pet Companion!</h1>
-          <p className="text-lg mb-6 text-justify">
-            At GetPet, we’re passionate about connecting pet lovers with their ideal companions. Whether you're seeking a loyal dog, a serene fish tank, or a cuddly rabbit, our platform offers a safe, trusted space to adopt or buy pets. With a community dedicated to animal welfare, we ensure every pet finds a forever home.
+      <section className="bg-[#5C4033] text-white py-24 px-6 flex flex-col md:flex-row items-center justify-between relative overflow-hidden">
+        <div className="max-w-xl z-10">
+          <h3 className="text-[#F4A261] text-xl font-semibold mb-4">Welcome to Pet Paradise</h3>
+          <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6">Discover Your Perfect Pet!</h1>
+          <p className="text-lg mb-8 text-justify">
+            At GetPet, we’re passionate about bringing pet lovers and their ideal companions together. Explore a wide range of dogs, cats, rabbits, tortoises, and fish, all in a trusted space dedicated to animal welfare and happy homes.
           </p>
-          <div className="flex gap-4">
+          <div className="flex gap-6">
             <button
               onClick={() => navigate('/register')}
-              className="bg-[#F4A261] text-[#5C4033] font-bold px-6 py-2 rounded-full hover:bg-[#e6953f] transition"
+              className="bg-[#F4A261] text-[#5C4033] font-bold px-8 py-3 rounded-full shadow-lg hover:bg-[#e6953f] transition-transform transform hover:scale-105"
             >
               Adopt Now
             </button>
             <button
               onClick={() => navigate('/contact')}
-              className="border border-white px-6 py-2 rounded-full hover:bg-white hover:text-[#5C4033] transition"
+              className="border-2 border-white text-white px-8 py-3 rounded-full hover:bg-white hover:text-[#5C4033] transition-transform transform hover:scale-105"
             >
               Contact Us
             </button>
           </div>
         </div>
-        <div className="flex-shrink-0">
-          <div className="rounded-full overflow-hidden border-4 border-[#F4A261] w-64 h-64">
+        <div className="flex-shrink-0 mt-8 md:mt-0 z-10">
+          <div className="rounded-full overflow-hidden border-8 border-[#F4A261] w-[28rem] h-[28rem]">
             <img
-              src={sliderImages[currentSlide]}
-              alt="Pet Slide"
-              className="w-full h-full object-cover transition duration-500"
+              src={DogSlide} // Replace with dog-slide-large.jpg or similar large dog image
+              alt="Dog Slide"
+              className="w-full h-full object-cover transition duration-700 ease-in-out"
             />
           </div>
         </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#5C4033] to-transparent opacity-70"></div>
       </section>
 
       {/* Best Selling Pets */}
