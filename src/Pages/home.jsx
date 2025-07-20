@@ -123,6 +123,13 @@ const Home = () => {
       price: 10000,
       desc: 'A cozy rabbit.',
     },
+    {
+      id: 29,
+      name: 'Betta Fish',
+      image: Fish2,
+      price: 800,
+      desc: 'Vibrant colors with a bold personality.',
+    },
   ];
 
   const bestSellingPets = [
@@ -146,6 +153,13 @@ const Home = () => {
       image: Rabbit1,
       price: 2000,
       desc: 'A charming rabbit with floppy ears, loved for its small size and cuddly personality.',
+    },
+    {
+      id: 29,
+      name: 'Betta Fish',
+      image: Fish2,
+      price: 800,
+      desc: 'Vibrant colors with a bold personality.',
     },
   ];
 
@@ -249,32 +263,31 @@ const Home = () => {
 
       {/* Best Selling Pets */}
       <section className="py-20 px-6 bg-gray-50 animate-fade-in">
-        <h2 className="text-4xl font-extrabold text-center mb-12 text-[#5C4033] uppercase tracking-tight">Best Selling Pets</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-10 text-[#5C4033] uppercase tracking-tight">Best Selling Pets</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center">
           {bestSellingPets.map((pet) => (
             <div
               key={pet.id}
-              className="bg-white rounded-2xl border border-gray-200 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
+              className="bg-white w-[260px] rounded-2xl border border-gray-200 shadow hover:shadow-xl transition-transform hover:scale-105 cursor-pointer mx-auto"
               onClick={() => setSelectedProduct(pet)}
             >
-              <div className="p-4">
+              <div className="w-full h-[200px]">
                 <img
                   src={pet.image}
                   alt={pet.name}
-                  className="w-full h-56 object-cover rounded-xl transition-transform duration-300"
+                  className="w-full h-full object-cover rounded-t-2xl"
                 />
               </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-semibold text-[#5C4033] mb-2">{pet.name}</h3>
-                <p className="text-gray-600 text-sm mb-3">{pet.desc}</p>
-                <p className="text-[#5C4033] font-medium text-lg mb-4">₹{pet.price.toLocaleString()}</p>
+              <div className="p-4 text-center">
+                <h3 className="text-lg font-semibold text-[#5C4033] mb-1">{pet.name}</h3>
+                <p className="text-gray-500 text-sm truncate">{pet.desc}</p>
+                <p className="text-[#5C4033] font-semibold mt-2">₹{pet.price}</p>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     addToCart(pet);
                   }}
-                  className="bg-gradient-to-r from-[#5C4033] to-[#4a332a] text-white px-6 py-2 rounded-full font-medium hover:from-[#4a332a] hover:to-[#3A2A1F] transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#5C4033]/50"
-                  aria-label={`Add ${pet.name} to cart`}
+                  className="mt-3 bg-[#5C4033] text-white px-4 py-1 rounded-full text-sm hover:bg-[#3A2A1F]"
                 >
                   Add to Cart
                 </button>
@@ -286,32 +299,31 @@ const Home = () => {
 
       {/* Featured Products */}
       <section className="py-20 px-6 bg-[#f9e4d4] animate-fade-in">
-        <h2 className="text-4xl font-extrabold text-center mb-12 text-[#5C4033] uppercase tracking-tight">Featured Pets</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-10 text-[#5C4033] uppercase tracking-tight">Featured Pets</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center">
           {featuredProducts.map((product) => (
             <div
               key={product.id}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
+              className="bg-white w-[260px] rounded-2xl shadow hover:shadow-xl transition-transform hover:scale-105 cursor-pointer mx-auto"
               onClick={() => setSelectedProduct(product)}
             >
-              <div className="p-4">
+              <div className="w-full h-[200px]">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-64 object-cover rounded-xl transition-transform duration-300"
+                  className="w-full h-full object-cover rounded-t-2xl"
                 />
               </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-bold text-[#5C4033] mb-2">{product.name}</h3>
-                <p className="text-gray-600 text-sm mb-3">{product.desc}</p>
-                <p className="text-[#5C4033] font-medium text-lg mb-4">₹{product.price.toLocaleString()}</p>
+              <div className="p-4 text-center">
+                <h3 className="text-lg font-semibold text-[#5C4033] mb-1">{product.name}</h3>
+                <p className="text-gray-500 text-sm truncate">{product.desc}</p>
+                <p className="text-[#5C4033] font-semibold mt-2">₹{product.price}</p>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     addToCart(product);
                   }}
-                  className="bg-gradient-to-r from-[#5C4033] to-[#4a332a] text-white px-6 py-2 rounded-full font-medium hover:from-[#4a332a] hover:to-[#3A2A1F] transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#5C4033]/50"
-                  aria-label={`Add ${product.name} to cart`}
+                  className="mt-3 bg-[#5C4033] text-white px-4 py-1 rounded-full text-sm hover:bg-[#3A2A1F]"
                 >
                   Add to Cart
                 </button>
@@ -428,7 +440,7 @@ const Home = () => {
 
       {/* Shop by Categories */}
       <section className="py-20 px-6 bg-[#f0e6dc] animate-fade-in">
-        <h2 className="text-4xl font-bold text-center mb-12 text-[#5C4033] uppercase tracking-tight">Shop by Categories</h2>
+        <h2 className="text-3xl font-bold text-center mb-10 text-[#5C4033] uppercase tracking-tight">Shop by Categories</h2>
         <div className="flex flex-wrap justify-center gap-4 mb-10">
           {categories.map((cat) => (
             <button
@@ -446,31 +458,30 @@ const Home = () => {
           ))}
         </div>
         {selectedCategory && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center">
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
+                className="bg-white w-[260px] rounded-2xl shadow hover:shadow-xl transition-transform hover:scale-105 cursor-pointer mx-auto"
                 onClick={() => setSelectedProduct(product)}
               >
-                <div className="w-full h-56">
+                <div className="w-full h-[200px]">
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover rounded-t-xl transition-transform duration-300"
+                    className="w-full h-full object-cover rounded-t-2xl"
                   />
                 </div>
-                <div className="p-6 text-center">
-                  <h3 className="text-lg font-semibold text-[#5C4033] mb-2">{product.name}</h3>
-                  <p className="text-gray-600 text-sm mb-3">{product.desc}</p>
-                  <p className="text-[#5C4033] font-medium text-lg mb-4">₹{product.price.toLocaleString()}</p>
+                <div className="p-4 text-center">
+                  <h3 className="text-lg font-semibold text-[#5C4033] mb-1">{product.name}</h3>
+                  <p className="text-gray-500 text-sm truncate">{product.desc}</p>
+                  <p className="text-[#5C4033] font-semibold mt-2">₹{product.price}</p>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       addToCart(product);
                     }}
-                    className="bg-gradient-to-r from-[#5C4033] to-[#4a332a] text-white px-6 py-2 rounded-full font-medium hover:from-[#4a332a] hover:to-[#3A2A1F] transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#5C4033]/50"
-                    aria-label={`Add ${product.name} to cart`}
+                    className="mt-3 bg-[#5C4033] text-white px-4 py-1 rounded-full text-sm hover:bg-[#3A2A1F]"
                   >
                     Add to Cart
                   </button>
