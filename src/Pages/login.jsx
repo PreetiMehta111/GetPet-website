@@ -48,8 +48,9 @@ const LoginPage = () => {
     const user = users.find(u => u.email === email && u.password === password);
 
     if (user) {
-      showToast('Login successful!');
-      setTimeout(() => navigate('/'), 1500);
+      localStorage.setItem('currentUser', JSON.stringify(user)); // Store logged-in user
+      showToast('Login successful! Redirecting to profile.');
+      setTimeout(() => navigate('/profile', { state: { user } }), 1500);
     } else {
       showToast('Invalid email or password', 'error');
     }

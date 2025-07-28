@@ -1,36 +1,16 @@
-// import React from 'react';
-// import { NavLink } from 'react-router-dom';
-
-// const Header = () => {
-//   return (
-//     <header className="bg-[#3C0D0D] text-white">
-//       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-//         <div className="flex items-center space-x-2">
-//           <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
-//             <span className="text-[#3C0D0D] font-bold text-lg">🐾</span>
-//           </div>
-//           <h1 className="text-2xl font-bold">Get Pet</h1>
-//         </div>
-//         <nav className="flex space-x-6">
-//           <NavLink to="/" className="hover:text-yellow-400 font-medium">Home</NavLink>
-//           <NavLink to="/products" className="hover:text-yellow-400 font-medium">Products</NavLink>
-//           <NavLink to="/about" className="hover:text-yellow-400 font-medium">About Us</NavLink>
-//           <NavLink to="/contact" className="hover:text-yellow-400 font-medium">Contact Us</NavLink>
-//           <NavLink to="/register" className="hover:text-yellow-400 font-medium">Register</NavLink>
-//         </nav>
-//       </div>
-//     </header>
-//   );
-// };
-
-// export default Header;
-
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 // Header component with responsive navigation and cart
-const Header = ({ cartCount = 0 }) => {
+const Header = ({ cartCount = 0, onCartClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+  const handleLogout = () => {
+    localStorage.removeItem('currentUser');
+    navigate('/login');
+  };
 
   return (
     <header className="bg-[#5C4033] text-white py-4 px-4 sticky top-0 z-50 shadow-md">
@@ -49,12 +29,12 @@ const Header = ({ cartCount = 0 }) => {
           <NavLink to="/products" className="hover:text-[#F4A261] font-medium" aria-label="Shop products">Shop</NavLink>
           <NavLink to="/about" className="hover:text-[#F4A261] font-medium" aria-label="About us">About</NavLink>
           <NavLink to="/contact" className="hover:text-[#F4A261] font-medium" aria-label="Contact us">Contact</NavLink>
-          <NavLink to="/register" className="hover:text-[#F4A261] font-medium" aria-label="Register">Register</NavLink>
         </nav>
 
-        {/* Cart and mobile menu toggle */}
+        {/* Cart, Register/Login, and Profile/Logout */}
         <div className="flex items-center space-x-4">
           <button
+            onClick={onCartClick}
             className="relative flex items-center hover:text-[#F4A261] transition"
             aria-label={`View cart with ${cartCount} items`}
           >
@@ -67,6 +47,26 @@ const Header = ({ cartCount = 0 }) => {
               </span>
             )}
           </button>
+          {currentUser ? (
+            <>
+              <NavLink
+                to="/profile"
+                className="hover:text-[#F4A261] font-medium"
+                aria-label="View profile"
+              >
+                Profile ({currentUser.fullName})
+              </NavLink>
+              <button
+                onClick={handleLogout}
+                className="hover:text-[#F4A261] font-medium"
+                aria-label="Logout"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <NavLink to="/register" className="hover:text-[#F4A261] font-medium" aria-label="Register">Register</NavLink>
+          )}
           <button
             className="md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -81,12 +81,39 @@ const Header = ({ cartCount = 0 }) => {
 
       {/* Mobile navigation */}
       {isMenuOpen && (
-        <nav className="md:hidden mt-4 flex flex-col space-y-2 bg-[#4a332a] p-4 rounded-lg">
+        <nav className="md:hidden mt-4 flex flex-col space-y-2 bg-[#4a332a] p-4 rounded-lg relative">
+          <button
+            onClick={() => setIsMenuOpen(false)}
+            className="absolute top-2 right-2 text-[#F4A261] text-2xl font-bold hover:text-white transition duration-300 focus:outline-none focus:ring-4 focus:ring-[#F4A261]/50"
+            aria-label="Close mobile menu"
+          >
+            ✕
+          </button>
           <NavLink to="/" className="hover:text-[#F4A261] font-medium" onClick={() => setIsMenuOpen(false)} aria-label="Home page">Home</NavLink>
           <NavLink to="/products" className="hover:text-[#F4A261] font-medium" onClick={() => setIsMenuOpen(false)} aria-label="Shop products">Shop</NavLink>
           <NavLink to="/about" className="hover:text-[#F4A261] font-medium" onClick={() => setIsMenuOpen(false)} aria-label="About us">About</NavLink>
           <NavLink to="/contact" className="hover:text-[#F4A261] font-medium" onClick={() => setIsMenuOpen(false)} aria-label="Contact us">Contact</NavLink>
-          <NavLink to="/register" className="hover:text-[#F4A261] font-medium" onClick={() => setIsMenuOpen(false)} aria-label="Register">Register</NavLink>
+          {currentUser ? (
+            <>
+              <NavLink
+                to="/profile"
+                className="hover:text-[#F4A261] font-medium"
+                onClick={() => setIsMenuOpen(false)}
+                aria-label="View profile"
+              >
+                Profile ({currentUser.fullName})
+              </NavLink>
+              <button
+                onClick={() => { handleLogout(); setIsMenuOpen(false); }}
+                className="hover:text-[#F4A261] font-medium"
+                aria-label="Logout"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <NavLink to="/register" className="hover:text-[#F4A261] font-medium" onClick={() => setIsMenuOpen(false)} aria-label="Register">Register</NavLink>
+          )}
         </nav>
       )}
     </header>

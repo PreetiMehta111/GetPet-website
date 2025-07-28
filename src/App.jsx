@@ -25,6 +25,7 @@ import LoginPage from './Pages/login.jsx';
 import ProductsPage from './Pages/products.jsx';
 import AboutUs from './Pages/aboutus.jsx';
 import ContactUs from './Pages/contactus.jsx';
+import ProfilePage from './Pages/profilepage.jsx'; // 
 
 const App = () => {
   return (
@@ -36,11 +37,11 @@ const App = () => {
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
+        <Route path="/profile" element={<ProfilePage />} /> {/* Add the new route */}
       </Routes>
     </>
   );
 };
 
 export default App;
-
 

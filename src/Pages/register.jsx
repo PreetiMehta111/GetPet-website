@@ -74,8 +74,9 @@ const RegisterPage = () => {
 
     const updatedUsers = [...existingUsers, newUser];
     localStorage.setItem('users', JSON.stringify(updatedUsers));
+    localStorage.setItem('currentUser', JSON.stringify(newUser)); // Store logged-in user
 
-    showToast('Registration successful! You can now login.', 'success');
+    showToast('Registration successful! Redirecting to profile.', 'success');
 
     setRegisterData({
       fullName: '',
@@ -85,7 +86,7 @@ const RegisterPage = () => {
       confirmPassword: ''
     });
 
-    setTimeout(() => navigate('/login'), 1500);
+    setTimeout(() => navigate('/profile', { state: { user: newUser } }), 1500);
   };
 
   const handleRegisterChange = (e) => {
