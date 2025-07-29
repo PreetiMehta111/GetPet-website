@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Eye, EyeOff, Mail, Lock, User, Phone } from 'lucide-react';
 import GoldenRetriever from '../assets/GoldenRetriever.jpg';
@@ -7,15 +8,24 @@ const Toast = ({ message, type, onClose }) => {
   React.useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    }, 3000);
+    }, 5000); // 5-second timeout
     return () => clearTimeout(timer);
   }, [onClose]);
 
   return (
-    <div className={`fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
-      type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-    }`}>
-      {message}
+    <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div className={`bg-white text-[#5C4033] p-6 rounded-lg shadow-lg max-w-md w-full mx-4 text-center ${
+        type === 'success' ? 'border-2 border-green-500' : 'border-2 border-red-500'
+      }`}>
+        <p className="text-lg font-semibold">{message}</p>
+        <button
+          onClick={onClose}
+          className="mt-4 bg-[#5C4033] text-white px-4 py-2 rounded hover:bg-[#3A2A1F] transition"
+          aria-label="Close message"
+        >
+          OK
+        </button>
+      </div>
     </div>
   );
 };
@@ -61,7 +71,7 @@ const RegisterPage = () => {
     const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
 
     if (existingUsers.find(u => u.email === email)) {
-      return showToast('User already exists with this email', 'error');
+      return showToast('This email has already been registered. Please log in to our website.', 'error');
     }
 
     const newUser = {
@@ -74,9 +84,9 @@ const RegisterPage = () => {
 
     const updatedUsers = [...existingUsers, newUser];
     localStorage.setItem('users', JSON.stringify(updatedUsers));
-    localStorage.setItem('currentUser', JSON.stringify(newUser)); // Store logged-in user
+    localStorage.setItem('currentUser', JSON.stringify(newUser));
 
-    showToast('Registration successful! Redirecting to profile.', 'success');
+    showToast('Registration successful! Redirecting to home.', 'success');
 
     setRegisterData({
       fullName: '',
@@ -86,7 +96,7 @@ const RegisterPage = () => {
       confirmPassword: ''
     });
 
-    setTimeout(() => navigate('/profile', { state: { user: newUser } }), 1500);
+    setTimeout(() => navigate('/'), 1500);
   };
 
   const handleRegisterChange = (e) => {
@@ -97,7 +107,7 @@ const RegisterPage = () => {
   };
 
   const handleLoginRedirect = () => {
-    alert('Please get registered to Log In');
+    navigate('/login');
   };
 
   return (
@@ -107,7 +117,6 @@ const RegisterPage = () => {
         backgroundImage: `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb9VQ9WjoHKJhUm1yb5Ji4rd0Ki0lh77XScQ&s')`
       }}
     >
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm z-0"></div>
 
       {toast && (
@@ -120,7 +129,6 @@ const RegisterPage = () => {
 
       <div className="relative z-10 w-full max-w-4xl bg-white/10 backdrop-blur-md text-white rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 animate-slide-up">
         <div className="flex flex-col md:flex-row">
-          {/* Left Side - Form */}
           <div className="w-full md:w-1/2 p-8">
             <div className="text-center mb-6">
               <h1 className="text-3xl font-extrabold text-white mb-1">Create Account</h1>
@@ -197,7 +205,6 @@ const RegisterPage = () => {
             </div>
           </div>
 
-          {/* Right Side - Image */}
           <div className="hidden md:flex w-1/2 bg-[#5C4033] items-center justify-center p-6">
             <div className="flex flex-col items-center">
               <img src={GoldenRetriever} alt="Golden Retriever" className="w-48 h-48 rounded-full object-cover border-4 border-white shadow-lg mb-4" />
@@ -211,7 +218,6 @@ const RegisterPage = () => {
   );
 };
 
-// Input Field Component
 const InputField = ({ icon, name, value, placeholder, onChange, label, type = 'text', toggleIcon, toggleAction }) => (
   <div>
     <label className="block text-sm font-medium text-white mb-1">{label}</label>
