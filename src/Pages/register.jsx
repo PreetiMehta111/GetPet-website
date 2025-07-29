@@ -70,14 +70,14 @@ const RegisterPage = () => {
 
     const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
 
-    if (existingUsers.find(u => u.email === email)) {
+    if (existingUsers.find(u => u.email.toLowerCase() === email.toLowerCase())) {
       return showToast('This email has already been registered. Please log in to our website.', 'error');
     }
 
     const newUser = {
       id: Date.now(),
       fullName,
-      email,
+      email: email.toLowerCase(), // Normalize email
       phone,
       password
     };
