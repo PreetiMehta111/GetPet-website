@@ -142,6 +142,7 @@
 
 // export default LoginPage;
 
+
 import React, { useState } from 'react';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -196,11 +197,8 @@ const LoginPage = () => {
 
     if (user) {
       localStorage.setItem('currentUser', JSON.stringify(user));
-      showToast('Login successful! Redirecting to home.');
-      setTimeout(() => {
-        hideToast();
-        navigate('/');
-      }, 1500);
+      // Direct redirect to home without toast
+      navigate('/');
     } else {
       showToast('Invalid email or password', 'error');
       console.log('Login attempt - Email:', normalizedEmail, 'Password:', password); // Debug: Log attempt
@@ -257,7 +255,7 @@ const LoginPage = () => {
             onClick={() => navigate('/register')}
           >
             Register
-          </span>
+          </span>             
         </p>
       </div>
     </div>

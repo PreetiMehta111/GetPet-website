@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Eye, EyeOff, Mail, Lock, User, Phone } from 'lucide-react';
-import GoldenRetriever from '../assets/GoldenRetriever.jpg';
+import GoldenRetriever from '../assets/GoldenRetriever.jpg'; // Adjusted path
 import { useNavigate } from 'react-router-dom';
 
 const Toast = ({ message, type, onClose }) => {
@@ -86,8 +86,7 @@ const RegisterPage = () => {
     localStorage.setItem('users', JSON.stringify(updatedUsers));
     localStorage.setItem('currentUser', JSON.stringify(newUser));
 
-    showToast('Registration successful! Redirecting to home.', 'success');
-
+    // Direct redirect to home without toast
     setRegisterData({
       fullName: '',
       email: '',
@@ -95,8 +94,7 @@ const RegisterPage = () => {
       password: '',
       confirmPassword: ''
     });
-
-    setTimeout(() => navigate('/'), 1500);
+    navigate('/');
   };
 
   const handleRegisterChange = (e) => {

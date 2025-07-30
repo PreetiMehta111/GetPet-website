@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Header from './header.jsx';
 import Footer from './footer.jsx';
+import EsewaImage from '../assets/esewaicon.png';
 
 import DogSlide from '../assets/dog-slide.jpg';
 import CatSlide from '../assets/cat-slide.jpg';
@@ -57,6 +58,17 @@ const Home = () => {
   const [isPurchaseFinalized, setIsPurchaseFinalized] = useState(false);
   const [showNoProductMessage, setShowNoProductMessage] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+
+  // Initialize cart from localStorage
+  useEffect(() => {
+    const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCart(savedCart);
+  }, []);
+
+  // Update localStorage whenever cart changes
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -430,7 +442,7 @@ const Home = () => {
 
   const featuredProducts = [
     {
-      id: 26,
+      id: 31, // Changed from 26 to avoid conflict
       name: 'Golden Retriever',
       image: DogProduct,
       price: 15000,
@@ -444,7 +456,7 @@ const Home = () => {
       },
     },
     {
-      id: 27,
+      id: 32, // Changed from 27
       name: 'Tortoise',
       image: TortoiseProduct,
       price: 8000,
@@ -458,7 +470,7 @@ const Home = () => {
       },
     },
     {
-      id: 28,
+      id: 33, // Changed from 28
       name: 'Rabbit',
       image: RabbitProduct,
       price: 10000,
@@ -472,7 +484,7 @@ const Home = () => {
       },
     },
     {
-      id: 29,
+      id: 34, // Changed from 29
       name: 'Betta Fish',
       image: Fish2,
       price: 800,
@@ -531,7 +543,7 @@ const Home = () => {
       },
     },
     {
-      id: 29,
+      id: 34, // Changed from 29 to match featuredProducts
       name: 'Betta Fish',
       image: Fish2,
       price: 800,
@@ -566,7 +578,9 @@ const Home = () => {
       if (existingItem) {
         return prevCart;
       }
-      return [...prevCart, { ...product, quantity: 1 }];
+      const updatedCart = [...prevCart, { ...product, quantity: 1 }];
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      return updatedCart;
     });
   };
 
@@ -576,11 +590,15 @@ const Home = () => {
       setShowLoginPrompt(true);
       return;
     }
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === id ? { ...item, quantity: Math.max(1, item.quantity + change) } : item
-      ).filter(item => item.quantity > 0)
-    );
+    setCart((prevCart) => {
+      const updatedCart = prevCart
+        .map((item) =>
+          item.id === id ? { ...item, quantity: Math.max(1, item.quantity + change) } : item
+        )
+        .filter((item) => item.quantity > 0);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      return updatedCart;
+    });
   };
 
   const finalizePurchase = () => {
@@ -591,6 +609,13 @@ const Home = () => {
     }
     setIsPurchaseFinalized(true);
     setCart([]);
+    localStorage.setItem('cart', JSON.stringify([]));
+    setShowCart(false);
+  };
+
+  const cancelOrder = () => {
+    setCart([]);
+    localStorage.setItem('cart', JSON.stringify([]));
     setShowCart(false);
   };
 
@@ -632,7 +657,7 @@ const Home = () => {
 
   // Calculate subtotal and total with product-specific discounts
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const discount = cart.reduce((sum, item) => sum + (item.price * item.quantity * item.discount), 0);
+  const discount = cart.reduce((sum, item) => sum + (item.price * item.quantity * (item.discount || 0)), 0);
   const total = subtotal - discount;
 
   return (
@@ -773,16 +798,13 @@ const Home = () => {
                 <p><strong>Feeding Suggestion:</strong> {selectedProduct.desc.feeding}</p>
               </div>
               <p className="text-[#5C4033] font-semibold text-lg mb-3">₹{selectedProduct.price.toLocaleString()}</p>
-              <p className="text-gray-500 text-sm mb-4">{selectedProduct.shipping || 'Contact for shipping details'}</p>
+              <p className="text-gray-500 text-sm mb-4">Contact for shipping details</p>
               <div className="mb-6">
                 <span className="text-[#5C4033] font-medium mr-2">Rate this pet:</span>
                 {getRatingStars(selectedProduct.id)}
               </div>
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  addToCart(selectedProduct);
-                }}
+                onClick={() => addToCart(selectedProduct)}
                 className="w-full bg-gradient-to-r from-[#5C4033] to-[#4a332a] text-white py-3 rounded-lg font-medium hover:from-[#4a332a] hover:to-[#3A2A1F] transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#5C4033]/50"
                 aria-label={`Add ${selectedProduct.name} to cart`}
               >
@@ -853,13 +875,23 @@ const Home = () => {
                   <p className="text-[#5C4033] text-lg font-medium mb-2">Subtotal: ₹{subtotal.toLocaleString()}</p>
                   <p className="text-[#5C4033] text-lg font-medium mb-2">Discount: ₹{discount.toLocaleString()}</p>
                   <p className="text-[#5C4033] font-bold text-xl mb-4">Total: ₹{total.toLocaleString()}</p>
-                  <button
-                    onClick={finalizePurchase}
-                    className="w-full bg-gradient-to-r from-[#F4A261] to-[#E76F51] text-[#5C4033] py-3 rounded-lg font-medium text-lg hover:from-[#e6953f] hover:to-[#d65f41] transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#F4A261]/50"
-                    aria-label="Pay with eSewa"
-                  >
-                    Pay with eSewa
-                  </button>
+                  <div className="flex gap-4">
+                    <button
+                      onClick={finalizePurchase}
+                      className="flex-1 bg-gradient-to-r from-[#F4A261] to-[#E76F51] text-[#5C4033] py-3 rounded-lg font-medium text-lg hover:from-[#e6953f] hover:to-[#d65f41] transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#F4A261]/50 flex items-center justify-center"
+                      aria-label="Pay with eSewa"
+                    >
+                      <img src={EsewaImage} alt="eSewa" className="h-6 mr-2" />
+                      Pay with eSewa
+                    </button>
+                    <button
+                      onClick={cancelOrder}
+                      className="flex-1 bg-red-500 text-white py-3 rounded-lg font-medium text-lg hover:bg-red-600 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-500/50"
+                      aria-label="Cancel order"
+                    >
+                      Cancel Order
+                    </button>
+                  </div>
                   <div className="mt-3 text-center text-gray-500 text-base">
                     <p>Secured by eSewa</p>
                   </div>
@@ -916,14 +948,20 @@ const Home = () => {
             <p className="text-gray-600">You need to be logged in to purchase or add products to your cart. Please log in or register to continue.</p>
             <div className="mt-4 flex justify-center gap-4">
               <button
-                onClick={() => { closeLoginPrompt(); navigate('/login'); }}
+                onClick={() => {
+                  closeLoginPrompt();
+                  navigate('/login');
+                }}
                 className="bg-[#5C4033] text-white px-4 py-2 rounded-full hover:bg-[#3A2A1F] transition duration-300"
                 aria-label="Go to login"
               >
                 Log In
               </button>
               <button
-                onClick={() => { closeLoginPrompt(); navigate('/register'); }}
+                onClick={() => {
+                  closeLoginPrompt();
+                  navigate('/register');
+                }}
                 className="bg-[#F4A261] text-[#5C4033] px-4 py-2 rounded-full hover:bg-[#e6953f] transition duration-300"
                 aria-label="Go to register"
               >
