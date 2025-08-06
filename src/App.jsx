@@ -17,7 +17,7 @@
 
 // export default App; 
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './Pages/home.jsx';
 import RegisterPage from './Pages/register.jsx';
@@ -28,8 +28,28 @@ import ContactUs from './Pages/contactus.jsx';
 import ProfilePage from './Pages/profilepage.jsx'; // 
 
 const App = () => {
+
+  const [backendData, setBackendData] = useState([{}]); 
+
+  useEffect(() => {
+    fetch("/api").then(
+      response => response.json()
+    ).then(
+      data => { 
+        setBackendData(data)
+      }
+    )
+  }, []);
+
   return (
     <>
+    {(typeof backendData.users === 'undefined') ? ( 
+      <p>Loading...</p> 
+    ) : (
+      backendData.users.map((user, i) => (
+        <p key={i}>{user}</p>
+      ))
+    )}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />
@@ -44,3 +64,4 @@ const App = () => {
 };
 
 export default App;
+

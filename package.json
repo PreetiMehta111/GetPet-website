@@ -1,6 +1,7 @@
 {
   "name": "get-pet",
   "version": "0.1.0",
+  "proxy": "http://localhost:3000",
   "private": true,
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.11",
