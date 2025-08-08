@@ -24,6 +24,7 @@ const pool = new Pool({
   port: 5432,
 });
 
+
 const JWT_SECRET = 'your_jwt_secret_key';
 
 // Middleware to verify JWT
