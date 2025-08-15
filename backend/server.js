@@ -1,5 +1,3 @@
-
-
 // const express = require('express');
 // const bcrypt = require('bcrypt');
 // const jwt = require('jsonwebtoken');
@@ -103,9 +101,11 @@ const cors = require('cors');
 const pool = require('./db');
 require('dotenv').config();
 
+const petRoutes = require('./routes/pet'); // <-- Add this line
+
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:3000' })); // Allow frontend (React) to connect
+app.use(cors({ origin: 'http://localhost:5173' }));
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -141,7 +141,7 @@ app.post('/api/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const result = await pool.query(
       'INSERT INTO users (full_name, email, phone, password, role, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING id',
-      [fullName, email.toLowerCase(), phone, hashedPassword, role]
+      [fullName, email.toLowerCase(), phone, hashedPassword, 'user']
     );
     res.status(201).json({ message: 'User registered successfully', userId: result.rows[0].id });
   } catch (error) {
@@ -182,6 +182,10 @@ app.post('/api/login', async (req, res) => {
 app.get('/api/admin', authenticateToken, authorizeAdmin, (req, res) => {
   res.json({ message: 'Admin dashboard data', user: req.user });
 });
+
+// Use pet routes
+app.use('/api/pets', petRoutes); // <-- Add this line
+app.use('/uploads', express.static('uploads'));
 
 // Test database connection
 pool.query('SELECT NOW()', (err, res) => {
